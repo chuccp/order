@@ -12,7 +12,8 @@
         placeholder="请输入备注"
         show-word-limit
     />
-    <selectField label="选择类别" placeholder="选择类别"></selectField>
+    <selectField label="类别" placeholder="选择类别"></selectField>
+    <selectField label="单位" placeholder="选择单位"></selectField>
   </van-cell-group>
 
 </template>
