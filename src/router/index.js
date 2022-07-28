@@ -34,14 +34,14 @@ import store from "../store";
  },{
 
      path: '/product',
-     name: 'Product',
+     name: 'addProduct',
      component: () => import('../product/index.vue'),
      meta:{title:i18n.global.t('name.addProduct')}
 
  },{
 
-     path: '/product',
-     name: 'Product',
+     path: '/listProduct',
+     name: 'listProduct',
      component: () => import('../product/list.vue'),
      meta:{title:i18n.global.t('name.listProduct')}
 

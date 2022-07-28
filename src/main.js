@@ -1,6 +1,9 @@
 import { createApp } from 'vue'
 import './style.css'
 import App from './App.vue'
+
+import selectField from './components/select-field.vue'
+
 import { Button } from 'vant';
 import { Sidebar, SidebarItem } from 'vant';
 import { NavBar } from 'vant';
@@ -19,7 +22,7 @@ import { Divider } from 'vant';
 import router from './router'
 import store from "./store";
 import i18n from './i18n'
-
+import { Picker } from 'vant';
 const app = createApp(App)
 app.use(store)
 app.use(router)
@@ -43,4 +46,6 @@ app.use(ActionSheet);
 app.use(Field);
 app.use(Stepper);
 app.use(Divider);
+app.use(Picker);
+app.component('select-field', selectField)
 app.mount('#app')
