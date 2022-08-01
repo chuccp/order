@@ -1,27 +1,33 @@
 <template>
-
-  <van-cell-group inset>
-    <van-field v-model="value" label="分类名" placeholder="请输入产品名" />
-  </van-cell-group>
-  <van-cell-group inset style="margin-top: 10px">
-  <van-button type="primary" size="large">提交</van-button>
-  </van-cell-group>
+  <coke-form @action="action">
+    <van-cell-group inset>
+      <van-field v-model="state.formData.name" label="分类名" placeholder="请输入分类名" />
+    </van-cell-group>
+  </coke-form>
 </template>
-
 <script setup>
 import {useStore} from 'vuex';
+import {addCategory} from '../api/category'
+import { Dialog } from 'vant';
 import {ref, onMounted, onBeforeUpdate,reactive} from 'vue';
-import i18n from '../i18n'
+import { useRouter, useRoute } from 'vue-router'
 
-const addCategory = i18n.global.t('name.addCategory');
 const  store = useStore()
+const router = useRouter()
 
-onMounted(()=>{
-  store.commit("increment",addCategory);
-})
-
+const state = reactive({formData:{name:""}})
+const action=()=>{
+  addCategory(state.formData).then((response)=>{
+    if(response.data.response.responseBody){
+      Dialog.alert({
+        message: '添加成功',
+      }).then(() => {
+        router.push({ path: '/user/listCategory' })
+      });
+    }
+  })
+}
 </script>
-
 <style scoped>
 
 </style>

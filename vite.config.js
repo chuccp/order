@@ -5,7 +5,8 @@ import { VantResolver } from 'unplugin-vue-components/resolvers';
 import requireTransform from 'vite-plugin-require-transform';
 
 // https://vitejs.dev/config/
-export default {
+
+export default defineConfig({
   plugins: [
     vue(),
     Components({
@@ -13,4 +14,6 @@ export default {
     }),
 
   ],
-};
+})
+
+

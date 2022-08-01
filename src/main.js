@@ -3,26 +3,19 @@ import './style.css'
 import App from './App.vue'
 
 import selectField from './components/select-field.vue'
+import cokeForm from './components/coke-form.vue'
 
-import { Button } from 'vant';
-import { Sidebar, SidebarItem } from 'vant';
-import { NavBar } from 'vant';
-import { Toast  } from 'vant';
-import { ActionBar, ActionBarIcon, ActionBarButton } from 'vant';
+
+import { Sidebar, SidebarItem,Button,NavBar,Toast,ActionBar, ActionBarIcon, ActionBarButton,Col, Row,Card,Field,Cell, CellGroup,List,ConfigProvider,ActionSheet,Stepper,Divider,Picker,Dialog  } from 'vant';
+
 import 'vant/es/toast/style';
-import { Col, Row } from 'vant';
-import { Card } from 'vant';
-import { Field } from 'vant';
-import { Cell, CellGroup } from 'vant';
-import { List } from 'vant';
-import { ConfigProvider } from 'vant';
-import { ActionSheet } from 'vant';
-import { Stepper } from 'vant';
-import { Divider } from 'vant';
+import 'vant/es/dialog/style';
+
 import router from './router'
 import store from "./store";
 import i18n from './i18n'
-import { Picker } from 'vant';
+
+import "./mock"
 const app = createApp(App)
 app.use(store)
 app.use(router)
@@ -47,5 +40,7 @@ app.use(Field);
 app.use(Stepper);
 app.use(Divider);
 app.use(Picker);
+app.use(Dialog);
 app.component('select-field', selectField)
+app.component('coke-form', cokeForm)
 app.mount('#app')

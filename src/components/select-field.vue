@@ -13,7 +13,7 @@
 
 <script setup>
 import {ref} from 'vue'
-
+import {defineProps} from "vue"
 const props = defineProps({
   label: String,
   placeholder: String,

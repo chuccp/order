@@ -1,5 +1,6 @@
 <template>
 
+  <coke-form @action="action">
   <van-cell-group inset>
     <van-field v-model="value" label="产品名" placeholder="请输入产品名" />
     <van-field
@@ -15,13 +16,17 @@
     <selectField label="类别" placeholder="选择类别"></selectField>
     <selectField label="单位" placeholder="选择单位"></selectField>
   </van-cell-group>
-
+  </coke-form>
 </template>
 
 <script setup>
 import {ref} from "vue";
 const value = ref("")
 const message = ref("")
+const action=()=>{
+
+}
+
 </script>
 
 <style scoped>
