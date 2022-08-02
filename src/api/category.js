@@ -9,3 +9,12 @@ export function addCategory(data) {
         data
     })
 }
+
+export function scan(data) {
+
+    return request({
+        url: 'user/addCategory.json',
+        method: 'post',
+        data
+    })
+}

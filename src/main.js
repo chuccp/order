@@ -15,7 +15,7 @@ import router from './router'
 import store from "./store";
 import i18n from './i18n'
 
-import "./mock"
+// import "./mock"
 const app = createApp(App)
 app.use(store)
 app.use(router)

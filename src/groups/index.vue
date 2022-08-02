@@ -3,7 +3,7 @@
   <van-row gutter="20" >
     <van-col span="4" >
       <van-sidebar v-model="active" @change="onChange" >
-        <van-sidebar-item v-for="group in state.groups" :title="group.name" :badge="group.num" />
+        <van-sidebar-item v-for="group in state.groups" :title="group.categoryName" :badge="group.goodsList.length" />
       </van-sidebar>
 
     </van-col>
@@ -14,15 +14,16 @@
       "height": state.height+"px"
     }' :border="false" ref="groupcell"  >
         <div v-for="group in state.groups" :ref="setItemRef" class="group-views" >
-        <van-cell-group  :title="group.name" class="my-van-cell-group"  >
-          <van-cell  v-for="n in group.num" >
+        <van-cell-group  :title="group.categoryName" class="my-van-cell-group"  >
+          <van-cell  v-for="goods  in group.goodsList" >
             <van-card
-                price="2.00"
-                desc="描述信息"
-                title="商品标题"
+                :desc="goods.remark"
+                :title="goods.goodsName"
                 thumb="https://fastly.jsdelivr.net/npm/@vant/assets/ipad.jpeg"
             >
-
+              <template #tags>
+                <van-tag plain type="danger">单位:{{goods.unit}}</van-tag>
+              </template>
               <template #footer class="van-cell-group-footer">
                 <van-button round type="primary" @click="showOrder" size="normal">下单</van-button>
               </template>
@@ -74,6 +75,7 @@
 <script>
 import {ref,onMounted,onBeforeUpdate,onUpdated,reactive,nextTick} from "vue";
 import {Toast} from "vant";
+import {scan} from '../api/goods'
 
 export default {
   setup() {
@@ -91,14 +93,17 @@ export default {
     }
     onMounted(()=>{
         state.height =  vanConfigProvider.value.$el.offsetHeight
-        state.num++;
+        console.log(state.height)
         groupItemRels =[];
-        state.groups =  [{"name":`分组1${state.num}`,"num":5,rel:"rel_1"},{"name":`分组2${state.num}`,"num":6,rel:"rel_2"},{"name":`分组3${state.num}`,"num":7,rel:"rel_2"}]
+        scan().then((response=>{
+           state.groups =response.data.responseBody
+        }))
+
     })
     const onChangeSlider = (value) => Toast('当前值：' + value);
 
     const onChange = (index)=> {
-      Toast({message:state.groups[index].name,position: 'bottom'})
+      Toast({message:state.groups[index].categoryName,position: 'bottom'})
       let scrollHeight = 0
       for (let i=0; i<index; i++)
       {
