@@ -18,3 +18,12 @@ export function listCategory(data) {
         data
     })
 }
+
+export function allCategory(data) {
+
+    return request({
+        url: '/api/v1/category/all.json',
+        method: 'post',
+        data
+    })
+}

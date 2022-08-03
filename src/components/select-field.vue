@@ -1,5 +1,5 @@
 <template>
-  <van-field v-model="value" :label="label" @click-input="clickInput" :placeholder="placeholder"/>
+  <van-field v-model="value" :label="label"  @click-input="clickInput" :placeholder="props.placeholder"/>
   <van-popup v-model:show="show1" :position="position1" :style="{ height: '40%' }">
     <van-picker
         :title="title1"
@@ -12,16 +12,23 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
-import {defineProps} from "vue"
+import {defineEmits, ref,defineProps,computed } from 'vue'
 const props = defineProps({
   label: String,
   placeholder: String,
-  columns: Array,
+  columns: Array ,
   show: Boolean,
   position: String,
-  title:String
+  title:String,
+  value:Array,
+  name:String,
+  selectKey:String,
+  selectName:String,
+  modelValue: [Number,String]
 })
+
+const emits = defineEmits(["update:modelValue"])
+
 const value = ref("")
 const position1 = ref("bottom")
 if (props.position) {
@@ -33,16 +40,35 @@ if (props.show) {
 } else {
   show1.value = false
 }
-const columns1 = ref(["111","222"])
-if (props.columns) {
-  columns1.value = props.columns;
-}
+
+let dataMap = {}
+const columns1 = computed(()=>{
+  const columnValues = []
+  if(props.selectName){
+    dataMap = {}
+    for(const item of props.columns) {
+      dataMap[item[props.selectName]]=item[props.selectKey]
+      columnValues.push(item[props.selectName])
+    }
+  }else{
+    for(const item of props.columns) {
+      columnValues.push(item)
+    }
+  }
+  return columnValues
+})
+
 const title1 = ref("选择")
 if(props.title){
   title1.value = props.title
 }
 const onConfirm = (el)=>{
   value.value = el
+  if(props.selectName){
+    emits('update:modelValue', dataMap[el])
+  }else{
+    emits('update:modelValue', el)
+  }
   show1.value = false
 }
 const onCancel=()=>{
