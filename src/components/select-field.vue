@@ -80,7 +80,6 @@ const onChange=(el)=>{
 const clickInput = () => {
   show1.value = true
 }
-
 </script>
 
 <style scoped>
