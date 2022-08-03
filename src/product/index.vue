@@ -18,7 +18,7 @@
 
     <van-cell title="图片上传" class="show-file">
       <template #extra>
-        <van-uploader upload-text="建议上传正方形80*80图片" name="file" accept="image/png, image/jpeg" :after-read="afterRead" />
+        <van-uploader v-model="fileList" upload-text="建议上传正方形80*80图片" name="file" accept="image/png, image/jpeg" :after-read="afterRead" max-count="1"  />
       </template>
     </van-cell>
   </van-cell-group>
@@ -32,6 +32,7 @@ const value = ref("")
 const message = ref("")
 const state = reactive({formData:{}})
 const categorys = ref([])
+const fileList = ref([])
 onMounted(()=>{
   allCategory({}).then((response)=>{
     categorys.value.push(...response.data.responseBody)
@@ -41,8 +42,9 @@ const action=()=>{
   console.log(state.formData.categoryId)
   console.log(state.formData.unit)
 }
-const afterRead=()=>{
-
+const afterRead=(file)=>{
+  fileList.value = []
+  fileList.value.push({url:file.content,isImage: true})
 }
 </script>
 
