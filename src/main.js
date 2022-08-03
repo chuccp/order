@@ -6,7 +6,7 @@ import selectField from './components/select-field.vue'
 import cokeForm from './components/coke-form.vue'
 
 
-import { Sidebar, SidebarItem,Button,NavBar,Toast,ActionBar, ActionBarIcon, ActionBarButton,Col, Row,Card,Field,Cell, CellGroup,List,ConfigProvider,ActionSheet,Stepper,Divider,Picker,Dialog  } from 'vant';
+import { Sidebar, SidebarItem,Button,NavBar,Toast,ActionBar, ActionBarIcon, ActionBarButton,Col, Row,Card,Field,Cell, CellGroup,List,ConfigProvider,ActionSheet,Stepper,Divider,Picker,Dialog,Uploader  } from 'vant';
 
 import 'vant/es/toast/style';
 import 'vant/es/dialog/style';
@@ -41,6 +41,7 @@ app.use(Stepper);
 app.use(Divider);
 app.use(Picker);
 app.use(Dialog);
+app.use(Uploader)
 app.component('select-field', selectField)
 app.component('coke-form', cokeForm)
 app.mount('#app')

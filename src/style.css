@@ -91,3 +91,10 @@ button:focus-visible {
 .group-views .van-card__footer{
   margin-top: -40px;
 }
+.show-file {
+
+}
+.show-file .van-cell__title{
+  width: var(--van-field-label-width);
+  flex:none;
+}

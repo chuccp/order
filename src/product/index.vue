@@ -15,6 +15,12 @@
     />
     <selectField v-model="state.formData.categoryId" :columns="categorys" select-name="categoryName" select-key="categoryId"  label="类别" placeholder="选择类别"></selectField>
     <selectField v-model="state.formData.unit" :columns="['箱']" label="单位" placeholder="选择单位"></selectField>
+
+    <van-cell title="图片上传" class="show-file">
+      <template #extra>
+        <van-uploader upload-text="建议上传正方形80*80图片" name="file" accept="image/png, image/jpeg" :after-read="afterRead" />
+      </template>
+    </van-cell>
   </van-cell-group>
   </coke-form>
 </template>
@@ -26,19 +32,18 @@ const value = ref("")
 const message = ref("")
 const state = reactive({formData:{}})
 const categorys = ref([])
-
 onMounted(()=>{
   allCategory({}).then((response)=>{
     categorys.value.push(...response.data.responseBody)
   })
 })
-
-
-
 const action=()=>{
   console.log(state.formData.categoryId)
+  console.log(state.formData.unit)
 }
+const afterRead=()=>{
 
+}
 </script>
 
 <style scoped>
