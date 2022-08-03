@@ -19,7 +19,7 @@
             <van-card
                 :desc="goods.remark"
                 :title="goods.goodsName"
-                thumb="https://fastly.jsdelivr.net/npm/@vant/assets/ipad.jpeg"
+                :thumb="imageUrl+goods.imageLink"
             >
               <template #tags>
                 <van-tag plain type="danger">单位:{{goods.unit}}</van-tag>
@@ -83,6 +83,10 @@ export default {
     const active  = ref(0);
     const groupcell = ref(null);
     const vanConfigProvider = ref(null);
+    const imageUrl = ref(import.meta.env.VITE_APP_IMAGE_API)
+
+    console.log(imageUrl.value)
+
     const state = reactive({goods:{},num:0,groups:[],show:false,height:540,formData:{goodsNum:50,goodsId:0}})
     // const groups =
     let groupItemRels =[]
@@ -134,7 +138,7 @@ export default {
     const themeVars = {cellGroupTitleColor:'var(--van-primary-color)'};
 
     return {
-      active,onChange,state,setItemRef,groupcell,themeVars,showOrder,vanConfigProvider,subscribe
+      active,onChange,state,setItemRef,groupcell,themeVars,showOrder,vanConfigProvider,subscribe,imageUrl
     }
 
   }}

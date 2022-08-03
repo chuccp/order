@@ -9,7 +9,7 @@
         autosize
         label="备注"
         type="textarea"
-        maxlength="50"
+        maxlength="300"
         placeholder="请输入备注"
         show-word-limit
     />
@@ -28,6 +28,7 @@
 <script setup>
 import {reactive, ref,onMounted} from "vue";
 import {allCategory} from '../api/category'
+import {addGoods} from '../api/goods'
 const value = ref("")
 const message = ref("")
 const state = reactive({formData:{}})
@@ -38,13 +39,30 @@ onMounted(()=>{
     categorys.value.push(...response.data.responseBody)
   })
 })
+let imgFile;
 const action=()=>{
+
+  let formData = new FormData();
+  formData.append("goodsName",state.formData.goodsName)
+  formData.append("categoryId",state.formData.categoryId)
+  formData.append("remark",state.formData.remark)
+  formData.append("unit",state.formData.unit)
+  if(imgFile){
+    formData.append("file",imgFile.file)
+  }
   console.log(state.formData.categoryId)
   console.log(state.formData.unit)
+  console.log(imgFile)
+  addGoods(formData).then((response)=>{
+
+  })
+
 }
+
 const afterRead=(file)=>{
   fileList.value = []
   fileList.value.push({url:file.content,isImage: true})
+  imgFile = file
 }
 </script>
 
