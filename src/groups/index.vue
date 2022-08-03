@@ -42,7 +42,7 @@
         <van-card
             :desc="state.goods.remark"
             :title="state.goods.goodsName"
-            thumb="https://fastly.jsdelivr.net/npm/@vant/assets/ipad.jpeg"
+            :thumb="imageUrl+state.goods.imageLink"
         >
           <template #tags>
             <van-tag plain type="danger">单位:{{state.goods.unit}}</van-tag>
@@ -58,11 +58,9 @@
         <van-divider />
         <van-cell-group  title="滑动调整数量">
         <van-slider v-model="state.formData.goodsNum"  :max="200" >
-
           <template #button>
             <div class="custom-button">{{ state.formData.goodsNum }}</div>
           </template>
-
         </van-slider>
         </van-cell-group>
         <van-divider />
