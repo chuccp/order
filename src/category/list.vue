@@ -5,7 +5,7 @@
       finished-text="没有更多了"
       @load="onLoad"
   >
-    <van-cell v-for="item in list" :key="item" :title="item" >
+    <van-cell v-for="item in list" :key="item.categoryId" :label="showLabel(item)" :title="item.categoryName" >
 
       <template #extra>
         <van-button icon="edit" type="default" >修改</van-button>
@@ -18,26 +18,28 @@
 
 <script setup>
 import { ref } from 'vue';
+import {listCategory} from '../api/category'
+
 const list = ref([]);
 const loading = ref(false);
 const finished = ref(false);
+let current = 1
+
+const showLabel = (item)=>{
+  return    `状态:${item.status==1?'显示':'隐藏'}  排序:${item.sort}`
+}
 
 const onLoad = () => {
-  // 异步更新数据
-  // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-  setTimeout(() => {
-    for (let i = 0; i < 10; i++) {
-      list.value.push(list.value.length + 1);
-    }
 
-    // 加载状态结束
-    loading.value = false;
-
-    // 数据全部加载完成
-    if (list.value.length >= 40) {
+  listCategory({current}).then((response)=>{
+    if(response.data.responseBody.length==0){
       finished.value = true;
+    }else{
+      list.value.push(...response.data.responseBody)
+      current++
+      loading.value = false;
     }
-  }, 1000);
+  })
 };
 </script>
 

@@ -46,7 +46,7 @@ const onConfirm = (el)=>{
   show1.value = false
 }
 const onCancel=()=>{
-
+  show1.value = false
 }
 const onChange=(el)=>{
   // console.log(el)

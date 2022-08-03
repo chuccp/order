@@ -6,14 +6,16 @@
       finished-text="没有更多了"
       @load="onLoad"
   >
-    <van-cell v-for="item in list" :key="item" :title="item" >
+    <van-cell v-for="goods in list" :key="goods.userGoodsId"  >
       <van-card
-          num="2"
-          price="2.00"
-          desc="描述信息"
-          title="商品标题"
+          :num="goods.goodsNum"
+          :desc="goods.remark"
+          :title="goods.goodsName"
           thumb="https://fastly.jsdelivr.net/npm/@vant/assets/ipad.jpeg"
       >
+        <template #tags>
+          <van-tag plain type="danger">单位:{{goods.unit}}</van-tag>
+        </template>
       </van-card>
 
     </van-cell>
@@ -24,25 +26,22 @@
 
 <script setup>
 import {ref} from "vue";
+import {orderList} from '../api/goods'
 const list = ref([]);
 const loading = ref(false);
 const finished = ref(false);
+let current = 1
 const onLoad = () => {
-  // 异步更新数据
-  // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-  setTimeout(() => {
-    for (let i = 0; i < 10; i++) {
-      list.value.push(list.value.length + 1);
-    }
-
-    // 加载状态结束
-    loading.value = false;
-
-    // 数据全部加载完成
-    if (list.value.length >= 40) {
+  orderList({current}).then((response)=>{
+    const orderList =  response.data.responseBody
+    if(orderList.length==0){
       finished.value = true;
+    }else{
+      list.value.push(...orderList)
+      current++
+      loading.value = false;
     }
-  }, 1000);
+  })
 };
 </script>
 
