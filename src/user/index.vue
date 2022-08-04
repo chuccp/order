@@ -30,19 +30,11 @@ const action = ()=>{
     state.formData.status = 0
   }
   addUser(state.formData).then((response)=>{
-    if(response.data.responseHeader.code==200){
-      Dialog.alert({
-        message: '添加成功',
-      }).then(() => {
-        router.push({ path: '/user/me' })
-      });
-    }else{
-      Dialog.alert({
-        message: response.data.responseBody,
-      }).then(() => {
-
-      });
-    }
+    Dialog.alert({
+      message: '添加成功',
+    }).then(() => {
+      router.push({ path: '/user/me' })
+    });
   })
 }
 </script>
