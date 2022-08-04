@@ -34,8 +34,8 @@
 
 <script setup>
 import {reactive, ref,onMounted} from "vue";
-import {allCategory} from '../api/category'
-import {addGoods} from '../api/goods'
+import {allCategory} from '@/api/category'
+import {addGoods} from '@/api/goods'
 import {Dialog} from "vant";
 import { useRouter } from 'vue-router'
 const value = ref("")

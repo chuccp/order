@@ -74,7 +74,7 @@
 <script>
 import {ref,onMounted,onBeforeUpdate,onUpdated,reactive,nextTick} from "vue";
 import {Toast,Dialog} from "vant";
-import {scan,orderGoods} from '../api/goods'
+import {scan,orderGoods} from '@/api/goods'
 
 export default {
   setup() {

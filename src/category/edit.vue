@@ -13,7 +13,7 @@
 </template>
 <script setup>
 import {useStore} from 'vuex';
-import {getCategory,updateCategory,deleteCategory} from '../api/category'
+import {getCategory,updateCategory,deleteCategory} from '@/api/category'
 import { Dialog } from 'vant';
 import {reactive,onMounted} from 'vue';
 import { useRouter,useRoute } from 'vue-router'

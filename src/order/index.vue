@@ -27,8 +27,8 @@
 
 <script setup>
 import {ref} from "vue";
-import {hasRole} from "../util/permission";
-import {orderList,allOrderList} from '../api/goods'
+import {hasRole} from "@/util/permission";
+import {orderList,allOrderList} from '@/api/goods'
 const list = ref([]);
 const loading = ref(false);
 const finished = ref(false);

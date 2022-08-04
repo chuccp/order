@@ -17,7 +17,7 @@
 </template>
 <script setup>
 import {reactive, ref,onMounted} from "vue";
-import {addUser} from '../api/user'
+import {addUser} from '@/api/user'
 import {Dialog} from "vant";
 import { useRouter } from 'vue-router'
 const router = useRouter()

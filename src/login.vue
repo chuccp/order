@@ -7,7 +7,7 @@
   </coke-form>
 </template>
 <script setup>
-import {login} from './api/user'
+import {login} from '@/api/user'
 import {useStore} from 'vuex';
 import {reactive, ref} from "vue";
 import { Toast } from 'vant';

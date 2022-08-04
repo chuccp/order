@@ -19,7 +19,7 @@
 
 <script setup>
 import { ref } from 'vue';
-import {listCategory} from '../api/category'
+import {listCategory} from '@/api/category'
 
 const list = ref([]);
 const loading = ref(false);
