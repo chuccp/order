@@ -5,7 +5,8 @@
   </div>
   <van-tabbar v-model="active" :route="true"  >
     <van-tabbar-item  icon="shop-o" replace to="/user/group"   >{{ $t('name.shop') }}</van-tabbar-item>
-    <van-tabbar-item  icon="cart-o" replace to="/user/order"   >{{ $t('name.order') }}</van-tabbar-item>
+    <van-tabbar-item  icon="cart-o" replace to="/user/order"  v-if="!$hasRole('super','manager')"  >{{ $t('name.order') }}</van-tabbar-item>
+    <van-tabbar-item  icon="cart-o" replace to="/user/customerOrder"  v-if="$hasRole('super','manager')"  >{{ $t('name.customerOrder') }}</van-tabbar-item>
     <van-tabbar-item  icon="user-o" replace to="/user/me"   >{{ $t('name.me') }}</van-tabbar-item>
   </van-tabbar>
 </template>

@@ -21,6 +21,13 @@
         <van-uploader v-model="fileList" upload-text="建议上传正方形80*80图片" name="file" accept="image/png, image/jpeg" :after-read="afterRead" max-count="1"  />
       </template>
     </van-cell>
+
+    <van-cell center title="是否展示">
+      <template #right-icon>
+        <van-switch v-model="state.formData.open" size="24" />
+      </template>
+    </van-cell>
+
   </van-cell-group>
   </coke-form>
 </template>
@@ -31,11 +38,16 @@ import {allCategory} from '../api/category'
 import {addGoods} from '../api/goods'
 const value = ref("")
 const message = ref("")
-const state = reactive({formData:{}})
+const state = reactive({formData:{open:true}})
 const categorys = ref([])
 const fileList = ref([])
 onMounted(()=>{
-  allCategory({}).then((response)=>{
+  if(state.formData.open){
+    state.formData.status = 1
+  }else{
+    state.formData.status = 0
+  }
+  allCategory(state.formData).then((response)=>{
     categorys.value.push(...response.data.responseBody)
   })
 })

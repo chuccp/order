@@ -31,3 +31,11 @@ export function orderList(data) {
         data
     })
 }
+
+export function allOrderList(data) {
+    return request({
+        url: '/api/v1/goods/allOrderList.json',
+        method: 'post',
+        data
+    })
+}

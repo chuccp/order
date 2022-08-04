@@ -6,6 +6,7 @@ const zh={
         category:"类别",
         shop:"店铺",
         order:"订单",
+        customerOrder:"客户订单",
         addOrder:"添加订单",
         addCategory:"添加类别",
         listCategory:"管理类别",

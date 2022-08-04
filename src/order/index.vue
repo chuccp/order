@@ -8,14 +8,15 @@
   >
     <van-cell v-for="goods in list" :key="goods.userGoodsId"  >
       <van-card
-          :num="goods.goodsNum"
-          :desc="goods.remark"
           :title="goods.goodsName"
           :thumb="imageUrl+goods.imageLink"
       >
-        <template #tags>
-          <van-tag plain type="danger">单位:{{goods.unit}}</van-tag>
+        <template #desc>
+          <div class="van-card__desc van-ellipsis" v-if="$hasRole('super','manager')">客户：{{ goods.userName }}</div>
+          <div class="van-card__desc van-ellipsis">数量：{{ goods.goodsNum }}{{goods.unit}}</div>
+          <div class="van-card__desc van-ellipsis">下单时间：{{ goods.createTime }}</div>
         </template>
+
       </van-card>
 
     </van-cell>
@@ -26,14 +27,21 @@
 
 <script setup>
 import {ref} from "vue";
-import {orderList} from '../api/goods'
+import {hasRole} from "../util/permission";
+import {orderList,allOrderList} from '../api/goods'
 const list = ref([]);
 const loading = ref(false);
 const finished = ref(false);
 const imageUrl = ref(import.meta.env.VITE_APP_IMAGE_API)
+let loadOrder
+if(hasRole("super","manager")){
+  loadOrder = allOrderList
+}else {
+  loadOrder = orderList
+}
 let current = 1
 const onLoad = () => {
-  orderList({current}).then((response)=>{
+  loadOrder({current}).then((response)=>{
     const orderList =  response.data.responseBody
     if(orderList.length==0){
       finished.value = true;
@@ -43,6 +51,8 @@ const onLoad = () => {
       loading.value = false;
     }
   })
+
+
 };
 </script>
 

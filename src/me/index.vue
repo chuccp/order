@@ -21,7 +21,7 @@
     <van-cell :title="$t('name.listProduct')" is-link to="/user/listProduct" />
   </van-cell-group>
   <van-cell-group title="用户管理" v-if="$hasRole('super','manager')" >
-    <van-cell :title="$t('name.addUser')" is-link to="/user/user" />
+    <van-cell :title="$t('name.addUser')" is-link to="/user/addUser" />
     <van-cell :title="$t('name.listUser')" is-link to="/user/listUser" />
   </van-cell-group>
 </template>

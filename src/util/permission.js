@@ -1,6 +1,6 @@
 import store from "../store";
 
-const hasRole = function (){
+export const hasRole = function (){
     const role = store.state.user.role
     for (const index in arguments) {
         const userRole = arguments[index]
