@@ -82,9 +82,6 @@ export default {
     const groupcell = ref(null);
     const vanConfigProvider = ref(null);
     const imageUrl = ref(import.meta.env.VITE_APP_IMAGE_API)
-
-    console.log(imageUrl.value)
-
     const state = reactive({goods:{},num:0,groups:[],show:false,height:540,formData:{goodsNum:50,goodsId:0}})
     // const groups =
     let groupItemRels =[]

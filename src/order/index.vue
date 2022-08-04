@@ -11,7 +11,7 @@
           :num="goods.goodsNum"
           :desc="goods.remark"
           :title="goods.goodsName"
-          thumb="https://fastly.jsdelivr.net/npm/@vant/assets/ipad.jpeg"
+          :thumb="imageUrl+goods.imageLink"
       >
         <template #tags>
           <van-tag plain type="danger">单位:{{goods.unit}}</van-tag>
@@ -30,6 +30,7 @@ import {orderList} from '../api/goods'
 const list = ref([]);
 const loading = ref(false);
 const finished = ref(false);
+const imageUrl = ref(import.meta.env.VITE_APP_IMAGE_API)
 let current = 1
 const onLoad = () => {
   orderList({current}).then((response)=>{

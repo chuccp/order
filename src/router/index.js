@@ -1,10 +1,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
+
+
 import i18n from '../i18n'
 import store from "../store";
 import Groups from '../groups/index.vue'
 import Login from '../login.vue'
 import User from '../user.vue'
+import {Base64} from 'js-base64'
+
  const routes = [{
 
      path: '/',
@@ -81,14 +85,16 @@ const router = createRouter({
     routes , // `routes: routes` 的缩写
 })
 
-router.beforeEach((to,from,next)=>{
+router.beforeEach((to,from)=>{
     if(to.meta.title){
         store.commit("increment",to.meta.title);
         document.title = to.meta.title
     }
-    next(vm=>{
-        console.log(vm)
-    })
+    if(!store.state.user.has){
+         const $cookies =  router.app.$cookies
+         const user = JSON.parse(Base64.decode($cookies.get("userInfo")))
+        store.commit("updateUser",user);
+    }
 
     return true
 })

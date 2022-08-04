@@ -4,7 +4,7 @@ import App from './App.vue'
 
 import selectField from './components/select-field.vue'
 import cokeForm from './components/coke-form.vue'
-
+import VueCookies from 'vue-cookies'
 
 import { Switch,Sidebar, SidebarItem,Button,NavBar,Toast,ActionBar, ActionBarIcon, ActionBarButton,Col, Row,Card,Field,Cell, CellGroup,List,ConfigProvider,ActionSheet,Stepper,Divider,Picker,Dialog,Uploader  } from 'vant';
 
@@ -14,9 +14,11 @@ import 'vant/es/dialog/style';
 import router from './router'
 import store from "./store";
 import i18n from './i18n'
+import permission from './util/permission'
 
 // import "./mock"
 const app = createApp(App)
+router.app = app
 app.use(store)
 app.use(router)
 app.use(i18n)
@@ -43,6 +45,8 @@ app.use(Picker);
 app.use(Dialog);
 app.use(Uploader)
 app.use(Switch)
+app.use(VueCookies)
+app.use(permission)
 app.component('select-field', selectField)
 app.component('coke-form', cokeForm)
 app.mount('#app')
