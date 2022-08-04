@@ -36,8 +36,11 @@
 import {reactive, ref,onMounted} from "vue";
 import {allCategory} from '../api/category'
 import {addGoods} from '../api/goods'
+import {Dialog} from "vant";
+import { useRouter } from 'vue-router'
 const value = ref("")
 const message = ref("")
+const router = useRouter()
 const state = reactive({formData:{open:true}})
 const categorys = ref([])
 const fileList = ref([])
@@ -66,7 +69,13 @@ const action=()=>{
   console.log(state.formData.unit)
   console.log(imgFile)
   addGoods(formData).then((response)=>{
-
+    if(response.data.responseBody){
+      Dialog.alert({
+        message: '添加成功',
+      }).then(() => {
+        router.push({ path: '/user/me' })
+      });
+    }
   })
 
 }
