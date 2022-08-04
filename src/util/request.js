@@ -7,6 +7,8 @@ const service = axios.create({
 })
 service.interceptors.response.use((response)=>{
 
+
+
     if(response.status!==200){
         Dialog.alert({message: '请求错误'}).then(() => {
 
@@ -21,6 +23,12 @@ service.interceptors.response.use((response)=>{
             return response
         }
     }
+},(error)=>{
+    console.log(error)
+    Dialog.alert({message: '请求错误'}).then(() => {
+
+    });
+    return Promise.reject(error)
 })
 
 export default service

@@ -4,9 +4,13 @@
       <van-card
           :desc="store.state.user.userNo"
           :title="store.state.user.userName"
+          class="user-views"
       >
         <template #thumb>
           <van-icon name="user-o" size="80" />
+        </template>
+        <template #footer>
+          <van-button size="normal" @click="logout" >退出登录</van-button>
         </template>
       </van-card>
 
@@ -28,7 +32,17 @@
 
 <script setup>
 import {useStore} from "vuex";
+import {inject} from "vue";
+import {useRouter} from "vue-router";
+const router = useRouter()
 const store = useStore()
+const cookies = inject("$cookies")
+const logout=()=>{
+  store.commit("clearUser");
+  cookies.remove("token")
+  cookies.remove("userInfo")
+  router.push({ path: '/login' })
+}
 </script>
 
 <style scoped>

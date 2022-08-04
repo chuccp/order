@@ -77,6 +77,13 @@ const routes = [{
 
     }, {
 
+        path: 'editCategory/:id',
+        name: 'editCategory',
+        component: () => import('../category/edit.vue'),
+        meta: {title: i18n.global.t('name.editCategory')}
+
+    }, {
+
         path: 'listCategory',
         name: 'listCategory',
         component: () => import('../category/list.vue'),
@@ -112,8 +119,16 @@ router.beforeEach((to, from) => {
     }
     if (!store.state.user.has) {
         const $cookies = router.app.$cookies
-        const user = JSON.parse(Base64.decode($cookies.get("userInfo")))
-        store.commit("updateUser", user);
+        const userInfo = $cookies.get("userInfo")
+        const token = $cookies.get("token")
+        if ((!!userInfo) && (!!token)) {
+            const user = JSON.parse(Base64.decode($cookies.get("userInfo")))
+            store.commit("updateUser", user);
+        } else {
+            if (to.path !== '/login') {
+                router.push({path: '/login'}).then(r => {})
+            }
+        }
     }
     return true
 })

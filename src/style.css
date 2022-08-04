@@ -91,6 +91,9 @@ button:focus-visible {
 .group-views .van-card__footer{
   margin-top: -40px;
 }
+.user-views .van-card__footer{
+  margin-top: -40px;
+}
 .show-file {
 
 }

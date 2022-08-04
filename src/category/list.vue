@@ -8,8 +8,9 @@
     <van-cell v-for="item in list" :key="item.categoryId" :label="showLabel(item)" :title="item.categoryName" >
 
       <template #extra>
-        <van-button icon="edit" type="default" >修改</van-button>
-        <van-button icon="minus" type="danger" >删除</van-button>
+        <van-button icon="edit" :to="'/user/editCategory/'+item.categoryId" type="default" >修改</van-button>
+<!--        <van-button icon="minus" type="warning" v-if="item.status==1" >隐藏</van-button>-->
+<!--        <van-button icon="plus" type="warning"  plain v-if="item.status==0" >显示</van-button>-->
       </template>
 
     </van-cell>

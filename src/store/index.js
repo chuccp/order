@@ -15,6 +15,10 @@ const store = createStore({
             state.user.userName = user.userName
             state.user.userNo = user.userNo
             state.user.role = user.role
+        },
+        clearUser (state) {
+            state.user.has = false
+            state.user = {}
         }
     }
 })
