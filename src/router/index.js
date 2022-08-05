@@ -105,6 +105,13 @@ const routes = [{
 
     }, {
 
+        path: 'editUser/:id',
+        name: 'editUser',
+        component: () => import('../user/edit.vue'),
+        meta: {title: i18n.global.t('name.editUser')}
+
+    }, {
+
         path: 'listUser',
         name: 'listUser',
         component: () => import('../user/list.vue'),

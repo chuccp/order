@@ -14,6 +14,7 @@ const zh={
         listCategory:"管理类别",
         addUser:"添加用户",
         listUser:"管理用户",
+        editUser:"修改用户",
         me:"我的",
     }
 }

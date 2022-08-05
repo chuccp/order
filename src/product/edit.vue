@@ -69,9 +69,7 @@ onMounted(async () => {
 })
 const action=()=>{
   state.formData.status = state.formData.open?1:0
-
   if(imgFile){
-
     let formData = new FormData();
     formData.append("goodsName",state.formData.goodsName)
     formData.append("categoryId",state.formData.categoryId)
