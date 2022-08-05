@@ -70,6 +70,13 @@ const routes = [{
 
     }, {
 
+        path: 'editProduct/:id',
+        name: 'editProduct',
+        component: () => import('../product/edit.vue'),
+        meta: {title: i18n.global.t('name.editProduct')}
+
+    }, {
+
         path: 'category',
         name: 'category',
         component: () => import('../category/index.vue'),

@@ -6,9 +6,6 @@ const service = axios.create({
     timeout: 5000 // request timeout
 })
 service.interceptors.response.use((response)=>{
-
-
-
     if(response.status!==200){
         Dialog.alert({message: '请求错误'}).then(() => {
 

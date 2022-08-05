@@ -3,6 +3,7 @@ const zh={
         product:"产品",
         addProduct:"添加产品",
         listProduct:"管理产品",
+        editProduct:"修改产品",
         category:"类别",
         shop:"店铺",
         order:"订单",

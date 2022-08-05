@@ -15,7 +15,6 @@
     />
     <selectField v-model="state.formData.categoryId" :columns="categorys" select-name="categoryName" select-key="categoryId"  label="类别" placeholder="选择类别"></selectField>
     <selectField v-model="state.formData.unit" :columns="['箱']" label="单位" placeholder="选择单位"></selectField>
-
     <van-cell title="图片上传" class="show-file">
       <template #extra>
         <van-uploader v-model="fileList" upload-text="建议上传正方形80*80图片" name="file" accept="image/png, image/jpeg" :after-read="afterRead" max-count="1"  />
@@ -45,12 +44,7 @@ const state = reactive({formData:{open:true}})
 const categorys = ref([])
 const fileList = ref([])
 onMounted(()=>{
-  if(state.formData.open){
-    state.formData.status = 1
-  }else{
-    state.formData.status = 0
-  }
-  allCategory(state.formData).then((response)=>{
+  allCategory({}).then((response)=>{
     categorys.value.push(...response.data.responseBody)
   })
 })
@@ -65,9 +59,7 @@ const action=()=>{
   if(imgFile){
     formData.append("file",imgFile.file)
   }
-  console.log(state.formData.categoryId)
-  console.log(state.formData.unit)
-  console.log(imgFile)
+  state.formData.status = state.formData.open?1:0
   addGoods(formData).then((response)=>{
     if(response.data.responseBody){
       Dialog.alert({

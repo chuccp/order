@@ -39,3 +39,42 @@ export function allOrderList(data) {
         data
     })
 }
+
+export function goodsList(data) {
+    return request({
+        url: '/api/v1/goods/list.json',
+        method: 'post',
+        data
+    })
+}
+export function getGoods(data) {
+    return request({
+        url: '/api/v1/goods/get.json',
+        method: 'post',
+        data
+    })
+}
+export function updateGoods(data) {
+    return request({
+        url: '/api/v1/goods/update.json',
+        method: 'post',
+        data
+    })
+}
+
+export function updateAndImage(data){
+    return request({
+        url: '/api/v1/goods/updateAndImage.json',
+        headers:{"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"},
+        method: 'post',
+        data
+    })
+}
+
+export function deleteGoods(data) {
+    return request({
+        url: '/api/v1/goods/remove.json',
+        method: 'post',
+        data
+    })
+}

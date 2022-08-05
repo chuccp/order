@@ -23,14 +23,20 @@ const props = defineProps({
   value:Array,
   name:String,
   selectKey:String,
+  showValue:String,
   selectName:String,
   modelValue: [Number,String]
 })
+const emits = defineEmits(["update:modelValue","change","confirm"])
 
-const emits = defineEmits(["update:modelValue"])
-
-const value = ref("")
 const position1 = ref("bottom")
+const sValue = ref("")
+const value = computed(()=>{
+  if(sValue.value.length>0){
+    return sValue.value
+  }
+  return props.showValue
+})
 if (props.position) {
   position1.value = props.position
 }
@@ -42,12 +48,14 @@ if (props.show) {
 }
 
 let dataMap = {}
+let dataMap2 = {}
 const columns1 = computed(()=>{
   const columnValues = []
   if(props.selectName){
     dataMap = {}
     for(const item of props.columns) {
       dataMap[item[props.selectName]]=item[props.selectKey]
+      dataMap2[item[props.selectKey]]=item[props.selectName]
       columnValues.push(item[props.selectName])
     }
   }else{
@@ -57,25 +65,26 @@ const columns1 = computed(()=>{
   }
   return columnValues
 })
-
 const title1 = ref("选择")
 if(props.title){
   title1.value = props.title
 }
+
 const onConfirm = (el)=>{
-  value.value = el
+  sValue.value = el
   if(props.selectName){
     emits('update:modelValue', dataMap[el])
   }else{
     emits('update:modelValue', el)
   }
   show1.value = false
+  emits('confirm', el)
 }
 const onCancel=()=>{
   show1.value = false
 }
 const onChange=(el)=>{
-  // console.log(el)
+  emits('change', el)
 }
 const clickInput = () => {
   show1.value = true
