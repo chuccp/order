@@ -3,7 +3,7 @@ const store = createStore({
     state () {
         return {
             title: "店铺",
-            user:{has:false,userName:"",userNo:"",role:""}
+            user:{has:false,userName:"",userNo:"",roles:[]}
         }
     },
     mutations: {
@@ -14,7 +14,7 @@ const store = createStore({
             state.user.has = true
             state.user.userName = user.userName
             state.user.userNo = user.userNo
-            state.user.role = user.role
+            state.user.roles = user.roles
         },
         clearUser (state) {
             state.user.has = false

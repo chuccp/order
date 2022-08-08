@@ -135,8 +135,9 @@ router.beforeEach((to, from) => {
         const $cookies = router.app.$cookies
         const userInfo = $cookies.get("userInfo")
         const token = $cookies.get("token")
+
         if ((!!userInfo) && (!!token)) {
-            const user = JSON.parse(Base64.decode($cookies.get("userInfo")))
+            const user = JSON.parse(Base64.decode(userInfo))
             store.commit("updateUser", user);
         } else {
             if (to.path !== '/login') {

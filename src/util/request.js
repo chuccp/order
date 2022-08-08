@@ -1,5 +1,9 @@
 import axios from 'axios'
 import {Dialog} from "vant";
+import {useRouter} from "vue-router";
+
+const router = useRouter()
+
 const service = axios.create({
     baseURL: import.meta.env.VITE_APP_BASE_API+import.meta.env.VITE_APP_BASE_URL, // url = base url + request url
     withCredentials: true, // send cookies when cross-domain requests
@@ -12,7 +16,14 @@ service.interceptors.response.use((response)=>{
         });
     }else{
         if(response.data.responseHeader.code !== 200){
-            Dialog.alert({message: response.data.responseBody}).then(() => {
+
+
+
+            Dialog.alert({message: response.data.responseHeader.msg}).then(() => {
+
+                if(response.data.responseHeader.code === 403 || response.data.responseHeader.code===402){
+                    router.push({ path: '/login' })
+                }
 
             });
             return Promise.reject(new Error(response.data.responseBody || 'Error'))

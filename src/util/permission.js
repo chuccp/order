@@ -1,10 +1,10 @@
 import store from "../store";
 
-export const hasRole = function (){
-    const role = store.state.user.role
+export const hasRole = function () {
+    const roles = store.state.user.roles
     for (const index in arguments) {
         const userRole = arguments[index]
-        if (userRole == role) {
+        if (roles.some((r) => r === userRole)) {
             return true
         }
     }
@@ -12,7 +12,7 @@ export const hasRole = function (){
 }
 
 export default {
-    install(app,options){
+    install(app, options) {
         app.config.globalProperties.$hasRole = hasRole
     }
 }
