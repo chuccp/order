@@ -1,5 +1,5 @@
 <template>
-  <van-field v-model="value" :label="label"  @click-input="clickInput" :placeholder="props.placeholder"/>
+  <van-field v-model="value" :label="label" readonly @click-input="clickInput" :placeholder="props.placeholder"/>
   <van-popup v-model:show="show1" :position="position1" :style="{ height: '40%' }">
     <van-picker
         :title="title1"
