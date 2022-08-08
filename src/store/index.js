@@ -3,7 +3,8 @@ const store = createStore({
     state () {
         return {
             title: "店铺",
-            user:{has:false,userName:"",userNo:"",roles:[]}
+            user:{has:false,userName:"",userNo:"",roles:[]},
+            viewHeight:0
         }
     },
     mutations: {
@@ -19,6 +20,9 @@ const store = createStore({
         clearUser (state) {
             state.user.has = false
             state.user = {}
+        },
+        updateViewHeight (state,height) {
+            state.viewHeight = height
         }
     }
 })

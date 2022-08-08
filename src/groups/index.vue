@@ -1,6 +1,6 @@
 <template>
-  <van-config-provider :theme-vars="themeVars" ref="vanConfigProvider">
-  <van-row gutter="20" >
+  <van-config-provider :theme-vars="themeVars" ref="vanConfigProvider"  >
+  <van-row gutter="20"  >
     <van-col span="4" >
       <van-sidebar v-model="active" @change="onChange" >
         <van-sidebar-item v-for="group in state.groups" :title="group.categoryName" :badge="group.goodsList.length" v-show="group.goodsList.length>0" />
@@ -11,7 +11,7 @@
       <van-cell-group :style='{
       "overflow-x":"scroll",
       "-webkit-overflow-scrolling": "touch",
-      "height": state.height+"px"
+      "height": store.state.viewHeight+"px"
     }' :border="false" ref="groupcell"  >
         <div v-for="group in state.groups" :ref="setItemRef" class="group-views" v-show="group.goodsList.length>0" >
         <van-cell-group  :title="group.categoryName" class="my-van-cell-group"  >
@@ -75,14 +75,16 @@
 import {ref,onMounted,onBeforeUpdate,onUpdated,reactive,nextTick} from "vue";
 import {Toast,Dialog} from "vant";
 import {scan,orderGoods} from '@/api/goods'
-
+import {useStore} from 'vuex';
 export default {
   setup() {
     const active  = ref(0);
     const groupcell = ref(null);
+
+    const store = useStore()
     const vanConfigProvider = ref(null);
     const imageUrl = ref(import.meta.env.VITE_APP_IMAGE_API)
-    const state = reactive({goods:{},num:0,groups:[],show:false,height:540,formData:{goodsNum:50,goodsId:0}})
+    const state = reactive({goods:{},num:0,groups:[],show:false,formData:{goodsNum:50,goodsId:0}})
     // const groups =
     let groupItemRels =[]
     const setItemRef=(el)=>{
@@ -91,7 +93,6 @@ export default {
       }
     }
     onMounted(()=>{
-        state.height =  vanConfigProvider.value.$el.offsetHeight
         groupItemRels =[];
         scan().then((response=>{
            state.groups =response.data.responseBody
@@ -133,7 +134,7 @@ export default {
     const themeVars = {cellGroupTitleColor:'var(--van-primary-color)'};
 
     return {
-      active,onChange,state,setItemRef,groupcell,themeVars,showOrder,vanConfigProvider,subscribe,imageUrl
+      active,onChange,state,setItemRef,groupcell,themeVars,showOrder,vanConfigProvider,subscribe,imageUrl,store
     }
 
   }}

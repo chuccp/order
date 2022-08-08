@@ -19,6 +19,7 @@ const state  = reactive({height:760});
 const onClickLeft = () => history.back();
 onMounted(()=>{
   state.height = document.body.clientHeight-100
+  store.commit("updateViewHeight",state.height)
 })
 </script>
 <style>
