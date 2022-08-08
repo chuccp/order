@@ -1,8 +1,8 @@
 import axios from 'axios'
 import {Dialog} from "vant";
-import {useRouter} from "vue-router";
 
-const router = useRouter()
+import router from '@/router'
+
 
 const service = axios.create({
     baseURL: import.meta.env.VITE_APP_BASE_API+import.meta.env.VITE_APP_BASE_URL, // url = base url + request url
@@ -22,8 +22,9 @@ service.interceptors.response.use((response)=>{
             Dialog.alert({message: response.data.responseHeader.msg}).then(() => {
 
                 if(response.data.responseHeader.code === 403 || response.data.responseHeader.code===402){
-                    router.push({ path: '/login' })
-                }
+
+                    router.push({path: '/login'}).then(r =>{})
+                 }
 
             });
             return Promise.reject(new Error(response.data.responseBody || 'Error'))
