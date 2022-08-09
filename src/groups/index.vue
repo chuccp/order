@@ -10,7 +10,7 @@
       <van-cell-group :style='{
       "overflow-x":"scroll",
       "-webkit-overflow-scrolling": "touch",
-      "height": (store.state.viewHeight-66)+"px"
+      "height": (storex.state.viewHeight-66)+"px"
     }' :border="false" ref="groupCell"  >
         <div v-for="group in state.groups" :ref="setItemRef" class="group-views" v-show="group.goodsList.length>0" >
         <van-cell-group  :title="group.categoryName" class="my-van-cell-group"  >
@@ -51,16 +51,17 @@
 </template>
 
 <script>
-import {ref, onMounted, onBeforeUpdate, onUpdated, reactive, nextTick, computed} from "vue";
+import {ref, onMounted, onBeforeUpdate, onUpdated, reactive, nextTick, computed,toRaw } from "vue";
 import {Toast,Dialog} from "vant";
 import {scan,orderGoods} from '@/api/goods'
 import {useStore} from 'vuex';
+import store from 'storejs';
 export default {
   setup() {
     const active  = ref(0);
     const groupCell = ref(null);
 
-    const store = useStore()
+    const storex = useStore()
     const vanConfigProvider = ref(null);
     const imageUrl = ref(import.meta.env.VITE_APP_IMAGE_API)
     const state = reactive({groups:[]})
@@ -70,15 +71,30 @@ export default {
         groupItemRels.push(el)
       }
     }
+    let start = false
     onMounted(()=>{
         groupItemRels =[];
         scan().then((response=>{
-           state.groups =response.data.responseBody
+          const groups = response.data.responseBody;
+          if(store.has("goodObj")){
+              const goodObj = store.get("goodObj")
+              console.log(goodObj)
+              for(const group of groups){
+                for(const goods of group.goodsList){
+                  const sg = goodObj[goods.goodsId]
+                  if (sg){
+                    goods.goodsNum = sg.goodsNum
+                  }
+                }
+              }
+            }
+          state.groups =groups
         }))
 
     })
 
     const order = computed(()=>{
+      let goodObj = {}
       let goodsNum = 0
       let orderCategoryNum = 0
       for(const group of state.groups){
@@ -86,8 +102,12 @@ export default {
           if(goods.goodsNum){
             goodsNum = goods.goodsNum+goodsNum
             orderCategoryNum = orderCategoryNum+1
+            goodObj[goods.goodsId] = toRaw(goods)
           }
         }
+      }
+      if(state.groups.length>0){
+        store.set("goodObj", goodObj);
       }
       return {goodsNum,orderCategoryNum}
     })
@@ -103,7 +123,7 @@ export default {
     };
     const themeVars = {cellGroupTitleColor:'var(--van-primary-color)'};
     return {
-      active,onChange,state,setItemRef,groupCell,themeVars,vanConfigProvider,imageUrl,store,order
+      active,onChange,state,setItemRef,groupCell,themeVars,vanConfigProvider,imageUrl,storex,order
     }
   }}
 </script>
