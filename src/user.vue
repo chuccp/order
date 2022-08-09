@@ -3,7 +3,7 @@
   <div class="main-view" :style="{height:state.height+'px' }">
     <router-view />
   </div>
-  <van-tabbar v-model="active" :route="true"  >
+  <van-tabbar v-model="active" :route="true" style="z-index:-1" >
     <van-tabbar-item  icon="shop-o" replace to="/user/group"   >{{ $t('name.shop') }}</van-tabbar-item>
     <van-tabbar-item  icon="cart-o" replace to="/user/order"  v-if="!$hasRole('super','manager')"  >{{ $t('name.order') }}</van-tabbar-item>
     <van-tabbar-item  icon="cart-o" replace to="/user/customerOrder"  v-if="$hasRole('super','manager')"  >{{ $t('name.customerOrder') }}</van-tabbar-item>

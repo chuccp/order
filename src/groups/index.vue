@@ -43,28 +43,41 @@
       <van-cell :title="'总数:'+order.goodsNum"  :label="'种类:'+order.orderCategoryNum"  >
 
         <template #value>
-          <van-button type="success">下单</van-button>
+          <van-button @click="changeShow" type="success">下单</van-button>
         </template>
       </van-cell>
     </van-cell-group>
   </van-config-provider>
+  <van-action-sheet
+      v-model:show="state.show"
+      title="下单列表"
+      close-on-click-action
+      ref="actionSheet"
+  >
+    <template #description>
+      <Order ref="orderVue"></Order>
+    </template>
+  </van-action-sheet>
 </template>
-
 <script>
 import {ref, onMounted, onBeforeUpdate, onUpdated, reactive, nextTick, computed,toRaw } from "vue";
 import {Toast,Dialog} from "vant";
 import {scan,orderGoods} from '@/api/goods'
 import {useStore} from 'vuex';
 import store from 'storejs';
+import Order from './order.vue'
 export default {
+  components: {Order},
   setup() {
     const active  = ref(0);
     const groupCell = ref(null);
 
     const storex = useStore()
     const vanConfigProvider = ref(null);
+    const orderVue = ref(null)
+    const actionSheet = ref(null)
     const imageUrl = ref(import.meta.env.VITE_APP_IMAGE_API)
-    const state = reactive({groups:[]})
+    const state = reactive({groups:[],show:false})
     let groupItemRels =[]
     const setItemRef=(el)=>{
       if(el){
@@ -78,7 +91,6 @@ export default {
           const groups = response.data.responseBody;
           if(store.has("goodObj")){
               const goodObj = store.get("goodObj")
-              console.log(goodObj)
               for(const group of groups){
                 for(const goods of group.goodsList){
                   const sg = goodObj[goods.goodsId]
@@ -121,9 +133,16 @@ export default {
       }
       groupCell.value.$el.scrollTop = scrollHeight
     };
-    const themeVars = {cellGroupTitleColor:'var(--van-primary-color)'};
+    const themeVars = {cellGroupTitleColor:'var(--van-primary-color)',actionSheetMaxHeight:'100%'};
+    const changeShow = ()=>{
+      state.show = true
+      if(orderVue.value){
+        orderVue.value.loadStore()
+      }
+      console.log(actionSheet.value.$el)
+    }
     return {
-      active,onChange,state,setItemRef,groupCell,themeVars,vanConfigProvider,imageUrl,storex,order
+      active,onChange,state,setItemRef,groupCell,themeVars,vanConfigProvider,imageUrl,storex,order,orderVue,changeShow,actionSheet
     }
   }}
 </script>
