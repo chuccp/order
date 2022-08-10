@@ -101,3 +101,9 @@ button:focus-visible {
   width: var(--van-field-label-width);
   flex:none;
 }
+.van-image-preview{
+  width: 100%;
+}
+.van-image-preview__image{
+  width: 100%;
+}

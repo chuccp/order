@@ -19,6 +19,7 @@
                 :desc="goods.remark"
                 :title="goods.goodsName"
                 :thumb="imageUrl+goods.imageLink"
+                @click-thumb="showBigImage(goods)"
             >
               <template #tags>
                 <van-tag plain type="danger">单位:{{goods.unit}}</van-tag>
@@ -52,32 +53,34 @@
       v-model:show="state.show"
       title="下单列表"
       close-on-click-action
-      ref="actionSheet"
   >
     <template #description>
-      <Order ref="orderVue"></Order>
+      <Order ref="orderVue" @action="orderAction"></Order>
     </template>
   </van-action-sheet>
+  <van-uploader v-show="false" upload-text="建议上传正方形图片" name="file" accept="image/png, image/jpeg" :after-read="afterRead" max-count="1"  />
 </template>
 <script>
 import {ref, onMounted, onBeforeUpdate, onUpdated, reactive, nextTick, computed,toRaw } from "vue";
 import {Toast,Dialog} from "vant";
-import {scan,orderGoods} from '@/api/goods'
+import {scan} from '@/api/goods'
 import {useStore} from 'vuex';
 import store from 'storejs';
 import Order from './order.vue'
+import {useRoute, useRouter} from "vue-router";
+import { ImagePreview } from 'vant';
 export default {
   components: {Order},
   setup() {
+    const router = useRouter()
     const active  = ref(0);
     const groupCell = ref(null);
-
     const storex = useStore()
     const vanConfigProvider = ref(null);
     const orderVue = ref(null)
-    const actionSheet = ref(null)
     const imageUrl = ref(import.meta.env.VITE_APP_IMAGE_API)
-    const state = reactive({groups:[],show:false})
+    const bigShow = ref(false)
+    const state = reactive({groups:[],show:false,bigShow:false,images:[]})
     let groupItemRels =[]
     const setItemRef=(el)=>{
       if(el){
@@ -89,8 +92,8 @@ export default {
         groupItemRels =[];
         scan().then((response=>{
           const groups = response.data.responseBody;
-          if(store.has("goodObj")){
-              const goodObj = store.get("goodObj")
+          if(store.has(storex.state.user.storeGoodsName)){
+              const goodObj = store.get(storex.state.user.storeGoodsName)
               for(const group of groups){
                 for(const goods of group.goodsList){
                   const sg = goodObj[goods.goodsId]
@@ -119,7 +122,7 @@ export default {
         }
       }
       if(state.groups.length>0){
-        store.set("goodObj", goodObj);
+        store.set(storex.state.user.storeGoodsName, goodObj);
       }
       return {goodsNum,orderCategoryNum}
     })
@@ -139,10 +142,34 @@ export default {
       if(orderVue.value){
         orderVue.value.loadStore()
       }
-      console.log(actionSheet.value.$el)
     }
+    const orderAction = ()=>{
+      state.show = false
+      store.set(storex.state.user.storeGoodsName, {});
+      for(const group of state.groups){
+        for(const goods of group.goodsList){
+          goods.goodsNum = 0
+        }
+      }
+      router.push("/user/order")
+    }
+
+    const showBigImage = (goods)=>{
+
+      const pre = goods.imageLink.substring(0,goods.imageLink.lastIndexOf("."))
+      const stuff = goods.imageLink.substring(goods.imageLink.lastIndexOf("."))
+
+      ImagePreview({
+        images: [
+          `${imageUrl.value}${pre}-big${stuff}`
+        ],
+        closeable: true,
+      });
+
+    }
+
     return {
-      active,onChange,state,setItemRef,groupCell,themeVars,vanConfigProvider,imageUrl,storex,order,orderVue,changeShow,actionSheet
+      active,onChange,state,setItemRef,groupCell,themeVars,vanConfigProvider,imageUrl,storex,order,orderVue,changeShow,orderAction,router,showBigImage,bigShow
     }
   }}
 </script>
@@ -171,5 +198,10 @@ export default {
 }
 .van-cell-group-bottom{
 
+}
+.num-button {
+  margin-left: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 </style>

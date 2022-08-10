@@ -3,7 +3,7 @@ const store = createStore({
     state () {
         return {
             title: "店铺",
-            user:{has:false,userName:"",userNo:"",roles:[]},
+            user:{has:false,userName:"",userNo:"",roles:[],storeGoodsName:""},
             viewHeight:0
         }
     },
@@ -16,6 +16,7 @@ const store = createStore({
             state.user.userName = user.userName
             state.user.userNo = user.userNo
             state.user.roles = user.roles
+            state.user.storeGoodsName = user.userNo+"_store_goodObj"
         },
         clearUser (state) {
             state.user.has = false
