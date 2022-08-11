@@ -3,7 +3,7 @@
   <van-row gutter="20"  >
     <van-col span="4" >
       <van-sidebar v-model="active" @change="onChange" >
-        <van-sidebar-item v-for="group in state.groups" :title="group.categoryName" :badge="group.goodsList.length" v-show="group.goodsList.length>0" />
+        <van-sidebar-item v-for="group in state.groups" :title="group.categoryName" :badge="group.groupNum" v-show="group.goodsList.length>0" />
       </van-sidebar>
     </van-col>
     <van-col span="20" style="padding-left: 14px;">
@@ -96,6 +96,7 @@ export default {
           if(store.has(storex.state.user.storeGoodsName)){
               const goodObj = store.get(storex.state.user.storeGoodsName)
               for(const group of groups){
+                group.groupNum=0
                 for(const goods of group.goodsList){
                   const sg = goodObj[goods.goodsId]
                   if (sg){
@@ -114,13 +115,16 @@ export default {
       let goodsNum = 0
       let orderCategoryNum = 0
       for(const group of state.groups){
+        let groupNum = 0
         for(const goods of group.goodsList){
           if(goods.goodsNum){
             goodsNum = goods.goodsNum+goodsNum
             orderCategoryNum = orderCategoryNum+1
+            groupNum = groupNum+1
             goodObj[goods.goodsId] = toRaw(goods)
           }
         }
+        group.groupNum = groupNum
       }
       if(state.groups.length>0){
         store.set(storex.state.user.storeGoodsName, goodObj);

@@ -4,7 +4,9 @@ const store = createStore({
         return {
             title: "店铺",
             user:{has:false,userName:"",userNo:"",roles:[],storeGoodsName:""},
-            viewHeight:0
+            viewHeight:0,
+            bottomHeight:0,
+            clientHeight:0
         }
     },
     mutations: {
@@ -24,6 +26,12 @@ const store = createStore({
         },
         updateViewHeight (state,height) {
             state.viewHeight = height
+        },
+        updateClientHeight (state,height) {
+            state.clientHeight = height
+        },
+        updateBottomHeight (state,height) {
+            state.bottomHeight = height
         }
     }
 })
