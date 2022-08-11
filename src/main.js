@@ -6,7 +6,7 @@ import selectField from './components/select-field.vue'
 import cokeForm from './components/coke-form.vue'
 import VueCookies from 'vue-cookies'
 
-import { ImagePreview,Switch,Sidebar,Popup, SidebarItem,Button,NavBar,Toast,ActionBar, ActionBarIcon, ActionBarButton,Col, Row,Card,Field,Cell, CellGroup,List,ConfigProvider,ActionSheet,Stepper,Divider,Picker,Dialog,Uploader  } from 'vant';
+import { Overlay,ImagePreview,Switch,Sidebar,Popup, SidebarItem,Button,NavBar,Toast,ActionBar, ActionBarIcon, ActionBarButton,Col, Row,Card,Field,Cell, CellGroup,List,ConfigProvider,ActionSheet,Stepper,Divider,Picker,Dialog,Uploader  } from 'vant';
 
 import 'vant/es/toast/style';
 import 'vant/es/dialog/style';
@@ -48,6 +48,7 @@ app.use(Switch)
 app.use(VueCookies)
 app.use(Popup)
 app.use(ImagePreview)
+app.use(Overlay)
 app.use(permission)
 app.component('select-field', selectField)
 app.component('coke-form', cokeForm)

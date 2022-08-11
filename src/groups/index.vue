@@ -27,10 +27,10 @@
               <template #footer class="van-cell-group-footer">
                 <van-stepper v-model="goods.goodsNum" default-value="0" min="0"  step="10" />
                 <van-cell-group style="margin-top: 15px;background: var(--van-card-background-color);">
-                  <van-button plain size="mini" @click="goods.goodsNum=50" type="primary" class="num-button">50</van-button>
-                  <van-button plain size="mini" @click="goods.goodsNum=100" type="primary" class="num-button">100</van-button>
-                  <van-button plain size="mini" @click="goods.goodsNum=200" type="primary" class="num-button">200</van-button>
-                  <van-button plain size="mini" @click="goods.goodsNum=300" type="primary" class="num-button">300</van-button>
+                  <van-button plain size="mini" @click="goods.goodsNum!=50?goods.goodsNum=50:goods.goodsNum=0" type="primary" class="num-button">50</van-button>
+                  <van-button plain size="mini" @click="goods.goodsNum!=100?goods.goodsNum=100:goods.goodsNum=0" type="primary" class="num-button">100</van-button>
+                  <van-button plain size="mini" @click="goods.goodsNum!=200?goods.goodsNum=200:goods.goodsNum=0" type="primary" class="num-button">200</van-button>
+                  <van-button plain size="mini" @click="goods.goodsNum!=300?goods.goodsNum=300:goods.goodsNum=0" type="primary" class="num-button">300</van-button>
                 </van-cell-group>
               </template>
             </van-card>
@@ -58,7 +58,7 @@
       <Order ref="orderVue" @action="orderAction"></Order>
     </template>
   </van-action-sheet>
-  <van-uploader v-show="false" upload-text="建议上传正方形图片" name="file" accept="image/png, image/jpeg" :after-read="afterRead" max-count="1"  />
+  <van-uploader v-show="false" upload-text="建议上传正方形图片"  accept="image/png, image/jpeg"  max-count="1"  />
 </template>
 <script>
 import {ref, onMounted, onBeforeUpdate, onUpdated, reactive, nextTick, computed,toRaw } from "vue";
@@ -69,6 +69,7 @@ import store from 'storejs';
 import Order from './order.vue'
 import {useRoute, useRouter} from "vue-router";
 import { ImagePreview } from 'vant';
+import overlayLoading from '@/components/overlay-loading.vue'
 export default {
   components: {Order},
   setup() {
@@ -138,9 +139,13 @@ export default {
     };
     const themeVars = {cellGroupTitleColor:'var(--van-primary-color)',actionSheetMaxHeight:'100%'};
     const changeShow = ()=>{
-      state.show = true
-      if(orderVue.value){
-        orderVue.value.loadStore()
+      if((!!order.value.goodsNum) && order.value.goodsNum>0){
+        state.show = true
+        if(orderVue.value){
+          orderVue.value.loadStore()
+        }
+      }else{
+        Toast({message:"您尚未选择产品",position: 'bottom'})
       }
     }
     const orderAction = ()=>{

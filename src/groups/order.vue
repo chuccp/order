@@ -9,6 +9,7 @@
       </template>
     </van-cell>
   </van-cell-group>
+  <overlayLoading :show="state.loading" text="提交中，请稍后"></overlayLoading>
 </template>
 
 <script setup>
@@ -20,7 +21,7 @@ import {Dialog} from "vant";
 
 const emits = defineEmits(["action"])
 
-const state = reactive({formData:[]})
+const state = reactive({formData:[],loading:false})
 
 const storex = useStore()
 const imageUrl = ref(import.meta.env.VITE_APP_IMAGE_API)
@@ -51,16 +52,16 @@ const order = computed(()=>{
 
 const click=()=>{
   console.log(state.formData)
+  state.loading = true
   addOrder(state.formData).then(response=>{
-
+    state.loading = false
     Dialog.alert({
       message: '添加成功',
     }).then(() => {
-
       emits('action')
-
     });
-
+  }).catch(()=>{
+    state.loading = false
   })
 }
 
