@@ -21,6 +21,7 @@ const state  = reactive({height:760,mTop:50});
 const onClickLeft = () => history.back();
 
 const mainHeight = computed(()=>{
+  console.log(":"+store.state.bottomHeight)
   const height = store.state.clientHeight-state.mTop-store.state.bottomHeight-50;
   store.commit("updateViewHeight",height)
   return height

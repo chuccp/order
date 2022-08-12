@@ -9,8 +9,12 @@ const store = useStore()
 const bottom = ref(null)
 document.body.onload = ()=>{
   store.commit("updateClientHeight",window.innerHeight)
+  console.log("onload:"+bottom.value.clientHeight)
   store.commit("updateBottomHeight",bottom.value.clientHeight)
-
+  setTimeout(()=>{
+    console.log("onload:"+bottom.value.clientHeight)
+    store.commit("updateBottomHeight",bottom.value.clientHeight)
+  },100)
 }
 document.body.onresize=()=>{
   store.commit("updateClientHeight",document.body.clientHeight)

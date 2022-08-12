@@ -8,7 +8,7 @@
     </van-col>
     <van-col span="20">
       <van-cell-group :style='{"height": (storex.state.viewHeight-66)+"px"}' :border="false" ref="groupCell"  >
-       <ScrollView  :height="storex.state.viewHeight-66" :top="state.top" ref="groupCellScrollView" :style='{
+       <ScrollView :height="storex.state.viewHeight-66" :top="state.top" ref="groupCellScrollView" :style='{
       "position":"relative",
       "width":"100%",
       "height": (storex.state.viewHeight-66)+"px"

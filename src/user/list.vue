@@ -1,4 +1,5 @@
 <template>
+  <div :style="{height:store.state.viewHeight+'px',width:'100%','overflow-x':'scroll'}">
   <van-list
       v-model:loading="loading"
       :finished="finished"
@@ -13,11 +14,14 @@
 
     </van-cell>
   </van-list>
+  </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import {listUser} from '@/api/user'
+import {useStore} from "vuex";
+const store = useStore()
 const list = ref([]);
 const loading = ref(false);
 const finished = ref(false);

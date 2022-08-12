@@ -1,5 +1,5 @@
 <template>
-<div class="c-scroll-view" @touchmove.prevent="onTouchMove" @touchstart="onTouchstart" @touchend="onTouchEnd" :style="{height:props.height+'px',width:'100%'}" ref="viewElement">
+<div class="c-scroll-view" @touchmove.prevent="onTouchMove" @touchstart="onTouchstart" @touchend="onTouchEnd" :style="{height:height+'px',width:'100%'}" ref="viewElement">
   <div class="c-scroll-view-insert" ref="viewInsertElement"  :style="{'margin-top':scrollTop+'px'}">
     <slot></slot>
   </div>
@@ -13,10 +13,9 @@ const props = defineProps({
   top:Number
 })
 
-// const showTop = computed(()=>{
-//   moveY.value = -props.top
-//   return props.top
-// })
+const height = computed(()=>{
+  return props.height
+})
 watch(()=>props.top,(newValue,oldValue)=>{
   moveY.value = -newValue
 })
@@ -43,8 +42,13 @@ let movieClientY = 0
 const onTouchMove=(e)=>{
   movieClientY = e.targetTouches[0].clientY
   mTop = movieClientY-initClientY
-  moveY.value = moveY.value+mTop
-  initClientY = movieClientY
+  if(mTop<5&&mTop>-5){
+
+  }else{
+    moveY.value = moveY.value+mTop
+    initClientY = movieClientY
+  }
+
 }
 const onTouchstart=(e)=>{
   mTop = 0
