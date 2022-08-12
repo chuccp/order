@@ -56,9 +56,8 @@ const weixin=()=>{
 </script>
 <style>
 .main-view{
-  overflow-x: scroll;
   -webkit-overflow-scrolling: touch;
   width: 100%;
-  position: fixed;
+  position: relative;
 }
 </style>

@@ -6,12 +6,15 @@
         <van-sidebar-item v-for="group in state.groups" :title="group.categoryName" :badge="group.groupNum" v-show="group.goodsList.length>0" />
       </van-sidebar>
     </van-col>
-    <van-col span="20" style="padding-left: 14px;">
-      <van-cell-group :style='{
-      "overflow-x":"scroll",
-      "-webkit-overflow-scrolling": "touch",
+    <van-col span="20">
+      <van-cell-group :style='{"height": (storex.state.viewHeight-66)+"px"}' :border="false" ref="groupCell"  >
+       <ScrollView  :height="storex.state.viewHeight-66" :top="state.top" ref="groupCellScrollView" :style='{
+      "position":"relative",
+      "width":"100%",
       "height": (storex.state.viewHeight-66)+"px"
-    }' :border="false" ref="groupCell"  >
+    }'>
+
+        <div ref="groupCellInsert" :style='{"min-height": "101%", "width":"100%"}'>
         <div v-for="group in state.groups" :ref="setItemRef" class="group-views" v-show="group.goodsList.length>0" >
         <van-cell-group  :title="group.categoryName" class="my-van-cell-group"  >
           <van-cell  v-for="goods  in group.goodsList"  >
@@ -37,6 +40,8 @@
           </van-cell>
         </van-cell-group>
         </div>
+        </div>
+       </ScrollView>
       </van-cell-group>
     </van-col>
   </van-row>
@@ -58,7 +63,6 @@
       <Order ref="orderVue" @action="orderAction"></Order>
     </template>
   </van-action-sheet>
-  <van-uploader v-show="false" upload-text="建议上传正方形图片"  accept="image/png, image/jpeg"  max-count="1"  />
 </template>
 <script>
 import {ref, onMounted, onBeforeUpdate, onUpdated, reactive, nextTick, computed,toRaw } from "vue";
@@ -66,6 +70,7 @@ import {Toast,Dialog} from "vant";
 import {scan} from '@/api/goods'
 import {useStore} from 'vuex';
 import store from 'storejs';
+import ScrollView from '@/components/ScrollView.vue';
 import Order from './order.vue'
 import {useRoute, useRouter} from "vue-router";
 import { ImagePreview } from 'vant';
@@ -78,10 +83,11 @@ export default {
     const groupCell = ref(null);
     const storex = useStore()
     const vanConfigProvider = ref(null);
+    const groupCellScrollView =  ref(null);
     const orderVue = ref(null)
     const imageUrl = ref(import.meta.env.VITE_APP_IMAGE_API)
     const bigShow = ref(false)
-    const state = reactive({groups:[],show:false,bigShow:false,images:[]})
+    const state = reactive({groups:[],show:false,bigShow:false,images:[],top:0})
     let groupItemRels =[]
     const setItemRef=(el)=>{
       if(el){
@@ -107,9 +113,7 @@ export default {
             }
           state.groups =groups
         }))
-
     })
-
     const order = computed(()=>{
       let goodObj = {}
       let goodsNum = 0
@@ -139,7 +143,9 @@ export default {
       {
         scrollHeight = scrollHeight+groupItemRels[i].offsetHeight
       }
-      groupCell.value.$el.scrollTop = scrollHeight
+      console.log("scrollHeight:"+scrollHeight)
+      state.top = scrollHeight
+      // groupCellScrollView.value.moveTop(scrollHeight)
     };
     const themeVars = {cellGroupTitleColor:'var(--van-primary-color)',actionSheetMaxHeight:'100%'};
     const changeShow = ()=>{
@@ -178,7 +184,7 @@ export default {
     }
 
     return {
-      active,onChange,state,setItemRef,groupCell,themeVars,vanConfigProvider,imageUrl,storex,order,orderVue,changeShow,orderAction,router,showBigImage,bigShow
+      active,onChange,state,setItemRef,groupCell,themeVars,vanConfigProvider,imageUrl,storex,order,orderVue,changeShow,orderAction,router,showBigImage,bigShow,groupCellScrollView
     }
   }}
 </script>

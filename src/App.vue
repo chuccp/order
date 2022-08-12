@@ -8,7 +8,7 @@ import {useStore} from 'vuex';
 const store = useStore()
 const bottom = ref(null)
 document.body.onload = ()=>{
-  store.commit("updateClientHeight",document.body.clientHeight)
+  store.commit("updateClientHeight",window.innerHeight)
   store.commit("updateBottomHeight",bottom.value.clientHeight)
 
 }

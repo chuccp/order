@@ -10,6 +10,7 @@ import { Overlay,ImagePreview,Switch,Sidebar,Popup, SidebarItem,Button,NavBar,To
 
 import 'vant/es/toast/style';
 import 'vant/es/dialog/style';
+import 'vant/es/image-preview/style';
 
 import router from './router'
 import store from "./store";

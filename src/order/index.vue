@@ -1,5 +1,5 @@
 <template>
-
+<div :style="{height:store.state.viewHeight+'px',width:'100%','overflow-x':'scroll'}">
   <van-list
       v-model:loading="loading"
       :finished="finished"
@@ -21,7 +21,7 @@
 
     </van-cell>
   </van-list>
-
+</div>
 
 </template>
 
@@ -29,6 +29,8 @@
 import {ref} from "vue";
 import {hasRole} from "@/util/permission";
 import {orderList,allOrderList} from '@/api/goods'
+import {useStore} from "vuex";
+const store = useStore()
 const list = ref([]);
 const loading = ref(false);
 const finished = ref(false);
