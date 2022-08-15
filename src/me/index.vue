@@ -41,6 +41,10 @@ const logout=()=>{
   store.commit("clearUser");
   cookies.remove("token")
   cookies.remove("userInfo")
+
+  document.cookie="token=;domain=."+window.location.host+";expires="+new Date().toGMTString()
+  document.cookie="userInfo=;domain=."+window.location.host+";expires="+new Date().toGMTString()
+
   router.push({ path: '/login' })
 }
 </script>
