@@ -29,7 +29,7 @@ const loading = ref(false);
 const finished = ref(false);
 let current = 1
 const showLabel = (item)=>{
-  return    `状态:${item.status==1?'显示':'隐藏'} 类别:${item.categoryName}`
+  return    `状态:${item.status==1?'显示':'隐藏'}`
 }
 const onLoad = () => {
   goodsList({current}).then((response)=>{

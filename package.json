@@ -6,6 +6,7 @@
   "scripts": {
     "dev1": "vite --mode development --host 0.0.0.0",
     "dev2": "vite --mode production",
+    "local": "vite --mode .env.local --host 0.0.0.0",
     "build": "vite build --mode production",
     "preview": "vite preview"
   },

@@ -12,8 +12,14 @@
           placeholder="请输入备注"
           show-word-limit
       />
-      <selectField  v-model="state.formData.categoryId" :columns="categorys" select-name="categoryName" select-key="categoryId" :show-value="state.formData.categoryName"  label="类别" placeholder="选择类别"></selectField>
-      <selectField v-model="state.formData.unit" :show-value="state.formData.unit" :columns="units" label="单位" placeholder="选择单位"></selectField>
+
+      <van-cell center title="产品种类" title-style="width: 100px;flex: none;">
+        <van-checkbox-group v-model="state.formData.categoryIds">
+          <van-checkbox v-for="category in categorys" shape="square" :name="category.categoryId" icon-size="24px" style="padding-bottom: 5px">
+            {{category.categoryName}}</van-checkbox>
+        </van-checkbox-group>
+      </van-cell>
+
       <van-cell title="图片上传" class="show-file">
         <template #extra>
           <van-uploader :preview-options="{closeable: true}" v-model="fileList" upload-text="建议上传正方形图片" name="file" accept="image/png, image/jpeg" :after-read="afterRead" max-count="1"  />
@@ -42,7 +48,7 @@ const units = ref(['箱'])
 const fileList = ref([])
 const value = ref("")
 let imgFile;
-const state = reactive({formData:{goodsName:"",sort:"",goodsId:route.params.id,open:false}})
+const state = reactive({formData:{goodsName:"",sort:"",goodsId:route.params.id,open:false,categoryIds:[]}})
 
 const loadCategory=function(){
   return new Promise((resolve, reject)=>{
@@ -72,9 +78,8 @@ const action=()=>{
   if(imgFile){
     let formData = new FormData();
     formData.append("goodsName",state.formData.goodsName)
-    formData.append("categoryId",state.formData.categoryId)
+    formData.append("categoryIds",state.formData.categoryIds)
     formData.append("remark",state.formData.remark)
-    formData.append("unit",state.formData.unit)
     formData.append("file",imgFile.file)
     formData.append("goodsId",state.formData.goodsId)
     updateAndImage(formData).then((response)=>{

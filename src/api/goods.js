@@ -40,6 +40,24 @@ export function allOrderList(data) {
     })
 }
 
+
+export function orderGroupList(data) {
+    return request({
+        url: '/api/v1/goods/orderGroupList.json',
+        method: 'post',
+        data
+    })
+}
+
+export function allOrderGroupList(data) {
+    return request({
+        url: '/api/v1/goods/allOrderGroupList.json',
+        method: 'post',
+        data
+    })
+}
+
+
 export function goodsList(data) {
     return request({
         url: '/api/v1/goods/list.json',

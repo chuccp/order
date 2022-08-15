@@ -15,13 +15,18 @@ const props=defineProps({
 
 const viewInsertElement = ref(null)
 const viewElement = ref(null)
-const onTouchMove=()=>{
-  console.log(viewElement.value)
-  console.log(viewElement.value.scrollTop)
-
+let preScroll = 0
+let initClientY = 0
+const onTouchMove=(e)=>{
+  if(viewElement.value.scrollTop==preScroll){
+     const movieClientY = e.targetTouches[0].clientY
+     const mTop = initClientY - movieClientY
+     viewElement.value.scrollTop = viewElement.value.scrollTop+mTop
+  }
 }
-const onTouchstart=()=>{
-
+const onTouchstart=(e)=>{
+  initClientY = e.targetTouches[0].clientY
+  preScroll = viewElement.value.scrollTop
 }
 const onTouchEnd=()=>{
 

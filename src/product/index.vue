@@ -13,8 +13,16 @@
         placeholder="请输入备注"
         show-word-limit
     />
-    <selectField v-model="state.formData.categoryId" :columns="categorys" select-name="categoryName" select-key="categoryId"  label="类别" placeholder="选择类别"></selectField>
-    <selectField v-model="state.formData.unit" :columns="['箱']" label="单位" placeholder="选择单位"></selectField>
+
+    <van-cell center title="产品种类" title-style="width: 100px;flex: none;">
+        <van-checkbox-group v-model="state.formData.categoryIds">
+          <van-checkbox v-for="category in categorys" shape="square" :name="category.categoryId" icon-size="24px" style="padding-bottom: 5px">
+            {{category.categoryName}}</van-checkbox>
+        </van-checkbox-group>
+    </van-cell>
+
+
+
     <van-cell title="图片上传" class="show-file">
       <template #extra>
         <van-uploader :preview-options="{closeable: true}" v-model="fileList" upload-text="建议上传正方形80*80图片" name="file" accept="image/png, image/jpeg" :after-read="afterRead" max-count="1"  />
@@ -40,7 +48,7 @@ import { useRouter } from 'vue-router'
 const value = ref("")
 const message = ref("")
 const router = useRouter()
-const state = reactive({formData:{open:true}})
+const state = reactive({formData:{open:true,categoryIds:[]}})
 const categorys = ref([])
 const fileList = ref([])
 onMounted(()=>{
@@ -51,9 +59,9 @@ onMounted(()=>{
 let imgFile;
 const action=()=>{
 
-  let formData = new FormData();
+  const formData = new FormData();
   formData.append("goodsName",state.formData.goodsName)
-  formData.append("categoryId",state.formData.categoryId)
+  formData.append("categoryIds",state.formData.categoryIds)
   formData.append("remark",state.formData.remark)
   formData.append("unit",state.formData.unit)
   if(imgFile){
@@ -80,5 +88,7 @@ const afterRead=(file)=>{
 </script>
 
 <style scoped>
-
+.img-icon {
+  height: 20px;
+}
 </style>

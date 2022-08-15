@@ -107,3 +107,6 @@ button:focus-visible {
 .van-image-preview__image{
   width: 100%;
 }
+.order-cell-group .van-card__footer{
+  margin-top: -40px;
+}

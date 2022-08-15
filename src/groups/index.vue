@@ -24,11 +24,8 @@
                 :thumb="imageUrl+goods.imageLink"
                 @click-thumb="showBigImage(goods)"
             >
-              <template #tags>
-                <van-tag plain type="danger">单位:{{goods.unit}}</van-tag>
-              </template>
               <template #footer class="van-cell-group-footer">
-                <van-stepper v-model="goods.goodsNum" default-value="0" min="0"  step="10" />
+                <van-stepper button-size="30px" v-model="goods.goodsNum" default-value="0" min="0"  step="10" />
                 <van-cell-group style="margin-top: 15px;background: var(--van-card-background-color);">
                   <van-button plain size="mini" @click="goods.goodsNum!=50?goods.goodsNum=50:goods.goodsNum=0" type="primary" class="num-button">50</van-button>
                   <van-button plain size="mini" @click="goods.goodsNum!=100?goods.goodsNum=100:goods.goodsNum=0" type="primary" class="num-button">100</van-button>
@@ -46,7 +43,7 @@
     </van-col>
   </van-row>
     <van-cell-group class="van-cell-group-bottom">
-      <van-cell :title="'总数:'+order.goodsNum"  :label="'种类:'+order.orderCategoryNum"  >
+      <van-cell :title="'总数:'+order.goodsNum"  :label="'品种:'+order.orderCategoryNum"  >
 
         <template #value>
           <van-button @click="changeShow" type="success">下单</van-button>

@@ -7,3 +7,22 @@ export function addOrder(data) {
         data
     })
 }
+
+
+
+export function orderList(data) {
+    return request({
+        url: '/api/v1/order/orderList.json',
+        method: 'post',
+        data
+    })
+}
+
+
+export function order2List(data) {
+    return request({
+        url: '/api/v1/order/order2List.json',
+        method: 'post',
+        data
+    })
+}
