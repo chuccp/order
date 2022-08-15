@@ -25,7 +25,7 @@
                 @click-thumb="showBigImage(goods)"
             >
               <template #footer class="van-cell-group-footer">
-                <van-stepper button-size="30px" v-model="goods.goodsNum" default-value="0" min="0"  step="10" />
+                <van-stepper button-size="30px" @change="changeNum(goods)" v-model="goods.goodsNum" default-value="0" min="0"  step="10" />
                 <van-cell-group style="margin-top: 15px;background: var(--van-card-background-color);">
                   <van-button plain size="mini" @click="goods.goodsNum!=50?goods.goodsNum=50:goods.goodsNum=0" type="primary" class="num-button">50</van-button>
                   <van-button plain size="mini" @click="goods.goodsNum!=100?goods.goodsNum=100:goods.goodsNum=0" type="primary" class="num-button">100</van-button>
@@ -119,10 +119,12 @@ export default {
         let groupNum = 0
         for(const goods of group.goodsList){
           if(goods.goodsNum){
-            goodsNum = goods.goodsNum+goodsNum
-            orderCategoryNum = orderCategoryNum+1
             groupNum = groupNum+1
-            goodObj[goods.goodsId] = toRaw(goods)
+            if(!goodObj[goods.goodsId]){
+              goodsNum = goods.goodsNum+goodsNum
+              orderCategoryNum = orderCategoryNum+1
+              goodObj[goods.goodsId] = toRaw(goods)
+            }
           }
         }
         group.groupNum = groupNum
@@ -180,8 +182,19 @@ export default {
 
     }
 
+    const changeNum=(goods)=>{
+      for(const group of state.groups){
+        for(const vGoods of group.goodsList){
+          if(vGoods.goodsId==goods.goodsId){
+            vGoods.goodsNum = goods.goodsNum
+          }
+        }
+      }
+
+    }
+
     return {
-      active,onChange,state,setItemRef,groupCell,themeVars,vanConfigProvider,imageUrl,storex,order,orderVue,changeShow,orderAction,router,showBigImage,bigShow,groupCellScrollView
+      active,onChange,state,setItemRef,groupCell,themeVars,vanConfigProvider,imageUrl,storex,order,orderVue,changeShow,orderAction,router,showBigImage,bigShow,groupCellScrollView,changeNum
     }
   }}
 </script>

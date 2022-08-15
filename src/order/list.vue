@@ -25,11 +25,16 @@ if(hasRole("super","manager")){
 }else {
   loadOrder = orderList
 }
+onMounted(()=>{
+  loadOrder({orderGroupId:props.orderGroupId}).then((response)=>{
+    userOrders.value = response.data.responseBody
+  })
 
+})
 
 watch(()=>props.orderGroupId,(newValue,oldValue)=>{
   console.log("newValue:"+newValue)
-  order2List({orderGroupId:newValue}).then((response)=>{
+  loadOrder({orderGroupId:newValue}).then((response)=>{
     userOrders.value = response.data.responseBody
   })
 })
