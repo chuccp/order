@@ -25,7 +25,7 @@
 
     <van-cell title="图片上传" class="show-file">
       <template #extra>
-        <van-uploader :preview-options="{closeable: true}" v-model="fileList" upload-text="建议上传正方形80*80图片" name="file" accept="image/png, image/jpeg" :after-read="afterRead" max-count="1"  />
+        <van-uploader :preview-options="{closeable: true}" v-model="fileList" upload-text="建议上传正方形图片" name="file" accept="image/png, image/jpeg" :after-read="afterRead" max-count="1"  />
       </template>
     </van-cell>
 
