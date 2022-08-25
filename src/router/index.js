@@ -129,7 +129,7 @@ const router = createRouter({
 router.beforeEach((to, from) => {
     if (to.meta.title) {
         store.commit("increment", to.meta.title);
-        document.title = to.meta.title
+        document.title = i18n.global.t('name.title')+"_"+to.meta.title
     }
     if (!store.state.user.has) {
         const $cookies = router.app.$cookies

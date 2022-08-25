@@ -12,7 +12,7 @@
           placeholder="请输入备注"
           show-word-limit
       />
-
+      <van-field v-model="state.formData.sort" label="排序" placeholder="数字越小越排前面" />
       <van-cell center title="产品种类" title-style="width: 100px;flex: none;">
         <van-checkbox-group v-model="state.formData.categoryIds">
           <van-checkbox v-for="category in categorys" shape="square" :name="category.categoryId" icon-size="24px" style="padding-bottom: 5px">
@@ -80,6 +80,7 @@ const action=()=>{
     formData.append("goodsName",state.formData.goodsName)
     formData.append("categoryIds",state.formData.categoryIds)
     formData.append("remark",state.formData.remark)
+    formData.append("sort",state.formData.sort)
     formData.append("file",imgFile.file)
     formData.append("goodsId",state.formData.goodsId)
     updateAndImage(formData).then((response)=>{

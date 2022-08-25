@@ -1,6 +1,6 @@
 <template>
   <van-cell-group :style="{height:(height-150)+'px','overflow-x':'scroll' }">
-    <van-cell v-for="goods  in state.formData" :title="goods.goodsName" :value="goods.goodsNum+goods.unit" />
+    <van-cell v-for="goods  in state.formData" :title="goods.goodsName" :value="goods.goodsNum" :label="goods.remark" />
   </van-cell-group>
   <van-cell-group class="van-cell-group-bottom">
     <van-cell :title="'总数:'+order.goodsNum"  :label="'种类:'+order.goodsCategory"  >
@@ -33,7 +33,7 @@ const loadStore=()=>{
   const goodObj = store.get(storex.state.user.storeGoodsName)
   for(const goodsId in goodObj){
     const goods = goodObj[goodsId]
-    state.formData.push({goodsId:goods.goodsId,goodsNum:goods.goodsNum,goodsName:goods.goodsName,unit:goods.unit})
+    state.formData.push({remark:goods.remark,goodsId:goods.goodsId,goodsNum:goods.goodsNum,goodsName:goods.goodsName,unit:goods.unit})
   }
 }
 onMounted(()=>{

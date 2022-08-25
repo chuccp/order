@@ -1,6 +1,6 @@
 <template>
   <van-cell-group :style="{height:(height-150)+'px','overflow-x':'scroll' }">
-    <van-cell v-for="goods  in userOrders" :title="goods.goodsName" :value="goods.goodsNum" />
+    <van-cell v-for="goods  in userOrders" :title="goods.goodsName" :value="goods.goodsNum" :label="goods.remark" />
   </van-cell-group>
   <van-cell-group class="van-cell-group-bottom">
     <van-cell :title="'总数:'+order.goodsNum"  :label="'产品种类:'+order.goodsCategory"  >
